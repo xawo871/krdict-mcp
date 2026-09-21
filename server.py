@@ -3,18 +3,12 @@ import xml.etree.ElementTree as ET
 
 import httpx
 from mcp.server.fastmcp import FastMCP
-from mcp.server.transport_security import TransportSecuritySettings
 from starlette.responses import JSONResponse
 
 
 API_KEY = os.environ.get("KRDICT_API_KEY", "")
 TRANS_LANG = os.environ.get("KRDICT_TRANS_LANG", "9")
 BASE_URL = "https://krdict.korean.go.kr/api"
-
-
-security = TransportSecuritySettings(
-    enable_dns_rebinding_protection=False
-)
 
 
 mcp = FastMCP(
@@ -309,10 +303,7 @@ async def health(request):
     )
 
 
-app = mcp.streamable_http_app(
-    stateless_http=True,
-    transport_security=security,
-)
+app = mcp.streamable_http_app()
 
 
 if __name__ == "__main__":
@@ -320,5 +311,4 @@ if __name__ == "__main__":
         transport="streamable-http",
         host="0.0.0.0",
         port=int(os.environ.get("PORT", "8000")),
-        stateless_http=True,
     )
