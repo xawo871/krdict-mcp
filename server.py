@@ -29,6 +29,7 @@ mcp = FastMCP(
         "Korean Standard Dictionary (KRDict) tools for Korean learners. "
         "Use these tools to search Korean vocabulary and retrieve Indonesian meanings."
     ),
+    transport_security=security,
 )
 
 
@@ -315,9 +316,7 @@ async def health(request):
     )
 
 
-app = mcp.streamable_http_app(
-    transport_security=security,
-)
+app = mcp.streamable_http_app()
 
 
 if __name__ == "__main__":
